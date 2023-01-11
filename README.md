@@ -1,4 +1,4 @@
-# 2FA for Minecraft
+# 2FA for Minecraft (Bungeecord Only!)
 Minecraft connections can be authenticated using a simple web interface.
 
 ## How to Setup?

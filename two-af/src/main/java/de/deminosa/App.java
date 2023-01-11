@@ -1,7 +1,16 @@
 package de.deminosa;
 
-public class App {
-    public static void main( String[] args) {
-        System.out.println( "Hello World!" );
+import net.md_5.bungee.api.plugin.Plugin;
+
+public class App extends Plugin{
+    
+    @Override
+    public void onEnable() {
+        super.onEnable();
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
     }
 }

@@ -1,7 +1,7 @@
 # 2FA for Minecraft
 Minecraft connections can be authenticated using a simple web interface.
 
-### How to Setup?
+## How to Setup?
 First, an account must be created via the console. Then the user has to enter the register token via the web interface together with his Minecraft name. The Minecraft name is used for UUID identification.
 
 After the user has entered the register token, the user receives a QR code which he can scan using the Google Auth app.

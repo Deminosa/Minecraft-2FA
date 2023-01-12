@@ -3,7 +3,7 @@ function login() {
     var username = document.getElementById("username").value;
     var code = document.getElementById("code").value;
     
-    window.history.replaceState("", "", getUriWithParam(document.URL, {username: username, code: code}))
+    window.history.replaceState("", "", getUriWithParam(document.URL, {type: "login", username: username, code: code}))
 }
 
 const getUriWithParam = (baseUrl, params) => {

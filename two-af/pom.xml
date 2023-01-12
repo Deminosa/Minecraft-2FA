@@ -81,7 +81,7 @@
   <build>
     <resources>
       <resource>
-        <directory>/</directory>
+        <directory>./</directory>
         <includes>
           <include>*/plugin.yml</include>
         </includes>

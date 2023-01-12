@@ -1,5 +1,6 @@
 package de.deminosa;
 
+import de.deminosa.auth.AuthManager;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -15,6 +16,8 @@ public class App extends Plugin{
 
         webinterface = new Webinterface();
         webinterface.onEnable();
+
+        new AuthManager();
     }
 
     @Override

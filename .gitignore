@@ -1,7 +1,2 @@
-two-af/target/two-af-1.0-SNAPSHOT.jar
-two-af/target/maven-archiver/pom.properties
-two-af/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
-two-af/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
-two-af/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
-two-af/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
-two-af/target/surefire-reports/de.deminosa.AppTest.txt
+.gitignore
+two-af/target/*

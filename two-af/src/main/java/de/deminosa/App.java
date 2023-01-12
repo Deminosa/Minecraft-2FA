@@ -32,6 +32,6 @@ public class App extends Plugin{
     }
 
     public static void log(String s) {
-        System.out.println("[Webinterface] " + s);
+        System.out.print("[Webinterface] " + s);
     }
 }

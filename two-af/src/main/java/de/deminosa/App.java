@@ -25,9 +25,6 @@ public class App extends Plugin{
         authManager = new AuthManager();
         String key = authManager.generateSecretKey();
         String barcode = authManager.getGoogleAuthenticatorBarCode(key, "Deminosa", "Minecraft 2FA");
-        log("Key: " + key);
-        log("Barcode: " + barcode);
-        log("QR: " + authManager.createQRCode(barcode, 300, 300));
     }
 
     @Override

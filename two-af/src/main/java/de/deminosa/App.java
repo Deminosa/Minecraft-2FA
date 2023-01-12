@@ -27,6 +27,10 @@ public class App extends Plugin{
         return instance;
     }
 
+    public Webinterface getWebinterface() {
+        return webinterface;
+    }
+
     public static void log(String s) {
         System.out.println("[Webinterface] " + s);
     }

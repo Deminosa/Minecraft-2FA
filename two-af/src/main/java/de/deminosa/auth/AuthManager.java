@@ -15,23 +15,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 
-import de.deminosa.App;
 import de.taimos.totp.TOTP;
 
 public class AuthManager {
 
-    public AuthManager() {
-        String key = generateSecretKey();
-        System.out.println(key);
-
-        String barcode = getGoogleAuthenticatorBarCode(key, "Deminosa", "Minecraft 2FA");
-        try {
-            createQRCode(barcode, App.getInstance().getDataFolder()+"/QR-code/pic.png", 64, 64);
-        } catch (WriterException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    public AuthManager() {}
 
     public String generateSecretKey() {
         SecureRandom random = new SecureRandom();
@@ -59,11 +47,12 @@ public class AuthManager {
         }
     }
 
-    public void createQRCode(String barCodeData, String filePath, int height, int width) throws WriterException, IOException {
-    BitMatrix matrix = new MultiFormatWriter().encode(barCodeData, BarcodeFormat.QR_CODE, width, height);
+    public String createQRCode(String barCodeData, int height, int width) {
+        String baseURL = "https://api.qrserver.com/v1/create-qr-code/?";
+        String size = height + "x" + width;
+        String data = barCodeData;
 
-    try (FileOutputStream out = new FileOutputStream(filePath)) {
-            MatrixToImageWriter.writeToStream(matrix, "png", out);
-        }
+        String finalURL = baseURL + "size=" + size + "&data=" + data;
+        return finalURL;
     }
 }

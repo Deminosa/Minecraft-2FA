@@ -1,5 +1,9 @@
 package de.deminosa;
 
+import java.io.IOException;
+
+import com.google.zxing.WriterException;
+
 import de.deminosa.auth.AuthManager;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -8,6 +12,7 @@ public class App extends Plugin{
 
     private static App instance;
     private Webinterface webinterface;
+    private AuthManager authManager;
     
     @Override
     public void onEnable() {
@@ -17,7 +22,12 @@ public class App extends Plugin{
         webinterface = new Webinterface();
         webinterface.onEnable();
 
-        new AuthManager();
+        authManager = new AuthManager();
+        String key = authManager.generateSecretKey();
+        String barcode = authManager.getGoogleAuthenticatorBarCode(key, "Deminosa", "Minecraft 2FA");
+        log("Key: " + key);
+        log("Barcode: " + barcode);
+        log("QR: " + authManager.createQRCode(barcode, 300, 300));
     }
 
     @Override
@@ -32,6 +42,10 @@ public class App extends Plugin{
 
     public Webinterface getWebinterface() {
         return webinterface;
+    }
+
+    public AuthManager getAuthManager() {
+        return authManager;
     }
 
     public static void log(String s) {

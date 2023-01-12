@@ -1,8 +1,12 @@
 package de.deminosa.web;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -10,24 +14,26 @@ import com.sun.net.httpserver.HttpHandler;
 
 import de.deminosa.App;
 import de.deminosa.web.response.QueryResponse;
+import de.deminosa.web.response.handlers.QueryResponseLogin;
 
 public class Webinterface implements HttpHandler{
     
     private final WebServerManager webServerManager;
 	private final int port;
 
-    private final List<QueryResponse> queryResponse;
+    private final List<QueryResponse> queryResponseList;
 
     public Webinterface() {
-        queryResponse = new ArrayList<>();
+        queryResponseList = new ArrayList<>();
         port = 20000;
 		webServerManager = new WebServerManager(port);
+
+		addQueryResponse(new QueryResponseLogin());
     }
 
     public void onEnable() {
+		loadFiles();
 		webServerManager.start();
-
-        loadFiles();
 	}
 
     public void onDisable() {
@@ -43,17 +49,17 @@ public class Webinterface implements HttpHandler{
 	}
 	
 	public void addQueryResponse(QueryResponse query) {
-		if(!queryResponse.contains(query)) {
-			queryResponse.add(query);
+		if(!queryResponseList.contains(query)) {
+			queryResponseList.add(query);
 		}
 	}
 
 	public List<QueryResponse> getQueryResponse() {
-		return queryResponse;
+		return queryResponseList;
 	}
 
     private void loadFiles() {
-        File dir = new File(App.getInstance().getDataFolder() + "//webpages//");
+        File dir = new File(App.getInstance().getDataFolder() + "/webpages/");
         if(!dir.getParentFile().exists()) {
             dir.mkdirs();
         }
@@ -67,18 +73,58 @@ public class Webinterface implements HttpHandler{
 
         for(int i = 0; i < files.length; i++){
             if(!files[i].isDirectory()){
-                /* TODO: Why VSCode?
-                 * 
-                 * The method getServer() from the type WebServerManager refers to the missing type HttpServer // Java(67108984)
-                 */
                 webServerManager.getServer().createContext("/" + files[i].getName(), this);
             }
         }
     }
 
+    private String getFileContents(String filenname) {
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(App.getInstance().getDataFolder() + "//webpages//" + filenname));
+			StringBuilder stringBuilder = new StringBuilder();
+			String line = bufferedReader.readLine();
+			while (line != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(System.lineSeparator());
+				line = bufferedReader.readLine();
+			}
+            bufferedReader.close();
+			return stringBuilder.toString();
+		}catch (Exception e) {
+			return "<h1>ERROR</h1><p>Please check the URL!<br>"
+					+ "<a href=\"/index.html\">Back to Main Page</a></p><hr />"
+					+ "<p>" + e.fillInStackTrace() + "</p>";
+		}
+	}
+
     @Override
-    public void handle(HttpExchange arg0) throws IOException {
-        
+    public void handle(HttpExchange httpExchange) throws IOException {
+        String response = getFileContents(httpExchange.getRequestURI().getPath().toString());
+
+        if(httpExchange.getRequestURI().getQuery() != null && !queryResponseList.isEmpty()){
+            String queryResponse = httpExchange.getRequestURI().getQuery();
+			App.log("Get query response!");
+
+            HashMap<String, String> map = new HashMap<>();
+			String[] args = queryResponse.split("&");
+				
+			for(int i = 0; i < args.length; i++) {
+				String[] raw = args[i].split("=");
+				String key = raw[0];
+				String value = raw[1];
+				
+				map.put(key, value);
+			}
+				
+			for(QueryResponse qr : queryResponseList) {
+				qr.incomingResponse(map);
+			}
+        }
+
+        httpExchange.sendResponseHeaders(200, response.length());
+		OutputStream outputStream = httpExchange.getResponseBody();
+		outputStream.write(response.getBytes());
+		outputStream.close();
     }
 
 

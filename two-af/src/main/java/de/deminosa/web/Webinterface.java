@@ -14,7 +14,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import de.deminosa.App;
 import de.deminosa.web.response.QueryResponse;
-import de.deminosa.web.response.handlers.QueryResponseLogin;
+import de.deminosa.web.response.handlers.QueryResponseRegister;
 
 public class Webinterface implements HttpHandler{
     
@@ -28,7 +28,7 @@ public class Webinterface implements HttpHandler{
         port = 20000;
 		webServerManager = new WebServerManager(port);
 
-		addQueryResponse(new QueryResponseLogin());
+		addQueryResponse(new QueryResponseRegister());
     }
 
     public void onEnable() {
@@ -117,9 +117,12 @@ public class Webinterface implements HttpHandler{
 			}
 				
 			for(QueryResponse qr : queryResponseList) {
-				qr.incomingResponse(map);
+				response = qr.incomingResponse(map, response);
 			}
         }
+
+		response = response.replace("%QR-Code%", "");
+		response = response.replace("%state%", "Waiting...");
 
         httpExchange.sendResponseHeaders(200, response.length());
 		OutputStream outputStream = httpExchange.getResponseBody();

@@ -2,6 +2,7 @@ package de.deminosa.web;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.UUID;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -12,6 +13,7 @@ public class WebServerManager {
 	
 	public WebServerManager(int port) {
 		App.log("Loading Webinterface...");
+		App.log(UUID.randomUUID().toString());
 		try {
 			server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
 		} catch (IOException e) {

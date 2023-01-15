@@ -1,9 +1,10 @@
 
-function login() {
+function register() {
     var username = document.getElementById("username").value;
     var code = document.getElementById("code").value;
     
-    window.history.replaceState("", "", getUriWithParam(document.URL, {type: "login", username: username, code: code}))
+    window.history.replaceState("", "", getUriWithParam(document.URL, {type: "reg", username: username, code: code}))
+    wait
 }
 
 const getUriWithParam = (baseUrl, params) => {

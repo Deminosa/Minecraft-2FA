@@ -5,11 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <title>Minecraft 2FA</title>
+    <script src="register-script.js"></script>
+    <title>Minecraft 2FA - Register</title>
 </head>
 <body>
     <div class="container">
+        <!-- QR-Code -->
+        <div class="screen">
+            <div class="screen__content">
+                <form class="login">
+                    <h2>%state%</h2>
+                    <img src="%QR-Code%"></img>
+                </form>
+            </div>
+            <div class="screen__background">
+
+            </div>
+        </div>
+        <!-- Login Form -->
         <div class="screen">
             <div class="screen__content">
                 <form class="login" name="loginForm" method="post">
@@ -20,10 +33,10 @@
                     </div>
                     <div class="login__field">
                         <i class="login__icon">🔒</i>
-                        <input type="text" class="login__input" placeholder="2FA Code" name="code" id="code">
+                        <input type="text" class="login__input" placeholder="Register Token" name="code" id="code">
                     </div>
-                    <button class="button login__submit" onclick="login()">
-                        <span class="button__text">Authenticate</span>
+                    <button class="button login__submit" onclick="register()">
+                        <span class="button__text">Register</span>
                         <i class="button__icon">📨</i>
                     </button>
                 </form>

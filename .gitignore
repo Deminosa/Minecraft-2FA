@@ -6,3 +6,4 @@ two-af/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFi
 two-af/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
 two-af/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
 two-af/target/surefire-reports/de.deminosa.AppTest.txt
+two-af/target/surefire-reports/TEST-de.deminosa.AppTest.xml

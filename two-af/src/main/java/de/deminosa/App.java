@@ -46,6 +46,6 @@ public class App extends Plugin{
     }
 
     public static void log(String s) {
-        System.out.print("[Webinterface] " + s);
+        System.out.print("[2FA] [Webinterface] " + s);
     }
 }

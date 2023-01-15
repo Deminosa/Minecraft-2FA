@@ -1,9 +1,5 @@
 package de.deminosa;
 
-import java.io.IOException;
-
-import com.google.zxing.WriterException;
-
 import de.deminosa.auth.AuthManager;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -23,8 +19,6 @@ public class App extends Plugin{
         webinterface.onEnable();
 
         authManager = new AuthManager();
-        String key = authManager.generateSecretKey();
-        String barcode = authManager.getGoogleAuthenticatorBarCode(key, "Deminosa", "Minecraft 2FA");
     }
 
     @Override

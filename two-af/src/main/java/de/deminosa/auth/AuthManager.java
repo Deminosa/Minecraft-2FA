@@ -9,13 +9,7 @@ import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-
-import de.taimos.totp.TOTP;
+import de.deminosa.totp.TOTP;
 
 public class AuthManager {
 

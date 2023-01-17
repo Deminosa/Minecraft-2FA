@@ -19,6 +19,8 @@ public class BungeeApp extends Plugin{
         webinterface.onEnable();
 
         authManager = new AuthManager();
+
+        registerChannelID("onlyProxyJoin");
     }
 
     @Override
@@ -39,7 +41,12 @@ public class BungeeApp extends Plugin{
         return authManager;
     }
 
+    private void registerChannelID(String id) {
+        getProxy().registerChannel("2fa:"+id);
+        log("[Channel] Create Channel Communication for '2fa:"+id+"'");
+    }
+
     public static void log(String s) {
-        System.out.print("[2FA] [Webinterface] " + s);
+        System.out.print("[2FA] [Proxy] " + s);
     }
 }

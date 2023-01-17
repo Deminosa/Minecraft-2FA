@@ -1,4 +1,4 @@
 name: Minecraft2FA
-main: de.deminosa.App
+main: de.deminosa.BungeeApp
 version: 1.0
 author: Deminosa

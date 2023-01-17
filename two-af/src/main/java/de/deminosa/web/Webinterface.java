@@ -12,7 +12,7 @@ import java.util.List;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import de.deminosa.App;
+import de.deminosa.bungeecord.BungeeApp;
 import de.deminosa.web.response.QueryResponse;
 import de.deminosa.web.response.handlers.QueryResponseRegister;
 
@@ -59,7 +59,7 @@ public class Webinterface implements HttpHandler{
 	}
 
     private void loadFiles() {
-        File dir = new File(App.getInstance().getDataFolder() + "/webpages/");
+        File dir = new File(BungeeApp.getInstance().getDataFolder() + "/webpages/");
         if(!dir.getParentFile().exists()) {
             dir.mkdirs();
         }
@@ -80,7 +80,7 @@ public class Webinterface implements HttpHandler{
 
     private String getFileContents(String filenname) {
 		try {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(App.getInstance().getDataFolder() + "//webpages//" + filenname));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(BungeeApp.getInstance().getDataFolder() + "//webpages//" + filenname));
 			StringBuilder stringBuilder = new StringBuilder();
 			String line = bufferedReader.readLine();
 			while (line != null) {
@@ -103,7 +103,7 @@ public class Webinterface implements HttpHandler{
 
         if(httpExchange.getRequestURI().getQuery() != null && !queryResponseList.isEmpty()){
             String queryResponse = httpExchange.getRequestURI().getQuery();
-			App.log("Get query response!");
+			BungeeApp.log("Get query response!");
 
             HashMap<String, String> map = new HashMap<>();
 			String[] args = queryResponse.split("&");

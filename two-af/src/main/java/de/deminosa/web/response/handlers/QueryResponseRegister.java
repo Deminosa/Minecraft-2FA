@@ -1,10 +1,9 @@
 package de.deminosa.web.response.handlers;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
-import de.deminosa.App;
+import de.deminosa.bungeecord.BungeeApp;
 import de.deminosa.web.response.QueryResponse;
 
 public class QueryResponseRegister implements QueryResponse{
@@ -28,10 +27,10 @@ public class QueryResponseRegister implements QueryResponse{
         }
 
         response = response.replace("%state%", "");
-        String key = App.getInstance().getAuthManager().generateSecretKey();
-        String barcode = App.getInstance().getAuthManager().getGoogleAuthenticatorBarCode(key, name, "Minecraft 2FA");
+        String key = BungeeApp.getInstance().getAuthManager().generateSecretKey();
+        String barcode = BungeeApp.getInstance().getAuthManager().getGoogleAuthenticatorBarCode(key, name, "Minecraft 2FA");
 
-        response = response.replace("%QR-Code%", App.getInstance().getAuthManager().createQRCode(barcode, 64*4, 64*4));
+        response = response.replace("%QR-Code%", BungeeApp.getInstance().getAuthManager().createQRCode(barcode, 64*4, 64*4));
         return response;
     }
     

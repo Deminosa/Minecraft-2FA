@@ -1,4 +1,4 @@
-package de.deminosa.totp;
+package de.deminosa.auth.totp;
 
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;

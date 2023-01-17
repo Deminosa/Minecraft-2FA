@@ -1,12 +1,12 @@
-package de.deminosa;
+package de.deminosa.bungeecord;
 
 import de.deminosa.auth.AuthManager;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
 
-public class App extends Plugin{
+public class BungeeApp extends Plugin{
 
-    private static App instance;
+    private static BungeeApp instance;
     private Webinterface webinterface;
     private AuthManager authManager;
     
@@ -27,7 +27,7 @@ public class App extends Plugin{
         super.onDisable();
     }
 
-    public static App getInstance() {
+    public static BungeeApp getInstance() {
         return instance;
     }
 

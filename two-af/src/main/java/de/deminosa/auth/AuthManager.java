@@ -1,7 +1,5 @@
 package de.deminosa.auth;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
@@ -9,7 +7,7 @@ import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
 
-import de.deminosa.totp.TOTP;
+import de.deminosa.auth.totp.TOTP;
 
 public class AuthManager {
 

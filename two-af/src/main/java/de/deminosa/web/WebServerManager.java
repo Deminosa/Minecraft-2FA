@@ -6,28 +6,28 @@ import java.util.UUID;
 
 import com.sun.net.httpserver.HttpServer;
 
-import de.deminosa.App;
+import de.deminosa.bungeecord.BungeeApp;
 
 public class WebServerManager {
     private HttpServer server;
 	
 	public WebServerManager(int port) {
-		App.log("Loading Webinterface...");
-		App.log(UUID.randomUUID().toString());
+		BungeeApp.log("Loading Webinterface...");
+		BungeeApp.log(UUID.randomUUID().toString());
 		try {
 			server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
 		} catch (IOException e) {
 			e.printStackTrace();
-			App.log("[ERROR] Fail to start the HTTP Server!");
-			App.log("[E-LOG] " + e.fillInStackTrace());
+			BungeeApp.log("[ERROR] Fail to start the HTTP Server!");
+			BungeeApp.log("[E-LOG] " + e.fillInStackTrace());
 		}
 		
 	}
 	
 	public void start() {
-		App.log("Start Webinterface...");
+		BungeeApp.log("Start Webinterface...");
 		server.start();
-		App.log("Webinterface can fond at: http:/" + server.getAddress());
+		BungeeApp.log("Webinterface can fond at: http:/" + server.getAddress());
 	}
 	
 	public void stop() {

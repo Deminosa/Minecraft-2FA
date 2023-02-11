@@ -8,6 +8,7 @@ import de.deminosa.utils.JIniFile;
 import de.deminosa.utils.License;
 import de.deminosa.utils.License.LogType;
 import de.deminosa.utils.License.ValidationType;
+import de.deminosa.utils.mysql.MySQL;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -17,6 +18,7 @@ public class BungeeApp extends Plugin{
     private Webinterface webinterface;
     private AuthManager authManager;
     private JIniFile config;
+    private MySQL mysql;
     
     @Override
     public void onEnable() {
@@ -25,20 +27,33 @@ public class BungeeApp extends Plugin{
         
         createConfig();
         setupConfig();
-        checkLicence();
+        
+        if(checkLicence()){
+            webinterface = new Webinterface();
+            webinterface.onEnable();
 
-        webinterface = new Webinterface();
-        webinterface.onEnable();
+            authManager = new AuthManager();
+            mysql = new MySQL(getDataFolder() + "");
 
-        authManager = new AuthManager();
+            registerChannelID("onlyProxyJoin");
+        }else {
+            getProxy().stop();
+        }
 
-        registerChannelID("onlyProxyJoin");
     }
 
     @Override
     public void onDisable() {
         webinterface.onDisable();
         super.onDisable();
+    }
+
+    public JIniFile getConfig() {
+        return config;
+    }
+
+    public MySQL getMysql() {
+        return mysql;
     }
 
     public static BungeeApp getInstance() {
@@ -62,38 +77,39 @@ public class BungeeApp extends Plugin{
         System.out.print("[2FA] [Proxy] " + s);
     }
 
-    private void checkLicence() {
+    private boolean checkLicence() {
         String server = "http://media.deminosa.de/license/verify.php";
         String license = config.ReadString("config", "license", "null");
         ValidationType vt = new License(license, server, getDescription().getName()).setConsoleLog(LogType.NONE).isValid();
 
         switch(vt) {
             case INVALID_PLUGIN:
-                getProxy().stop("[2FA] Invalid Plugin!");
-                break;
+                log("Invalid Plugin! - Please check whether the license for the plugin is correct!");
+                return false;
             case KEY_NOT_FOUND:
-                getProxy().stop("[2FA] Key not found!");
-                break;
+                log("Key not found! - Please check the config!");
+                return false;
             case KEY_OUTDATED:
-                getProxy().stop("[2FA] Key outdated!");
-                break;
+                log("Key outdated! - License has expired! - Please contact the seller!");
+                return false;
             case NOT_VALID_IP:
-                getProxy().stop("[2FA] IP not valid!");
-                break;
+                log("IP not valid! - Maybe there is already a connection?");
+                return false;
             case PAGE_ERROR:
-                getProxy().stop("[2FA] Page error - Possibly license server offline? - Try again later!");
-                break;
+                log("Page error - Possibly license server offline? - Try again later!");
+                return false;
             case URL_ERROR:
-                getProxy().stop("[2FA] URL error - license server not found!");
-                break;
+                log("URL error - license server not found!");
+                return false;
             case VALID:
-                break;
+                log("License accept!");
+                return true;
             case WRONG_RESPONSE:
-                getProxy().stop("[2FA] Wrong response - Try again later!");
-                break;
+                log("Wrong response - Try again later!");
+                return false;
             default:
-                getProxy().stop("[2FA] Something is wrong - no information can be given.");
-                break;
+                log("Something is wrong - no information can be given.");
+                return false;
         }
     }
 
@@ -120,12 +136,8 @@ public class BungeeApp extends Plugin{
 
     private void setupConfig() {
         if(!config.SectionExist("config")){
-            config.setString("OnlyProxyJoin", "IP", "127.0.0.1");
-            config.setString("OnlyProxyJoin", "msg", "&8[&62FA&8] &cKick from server!&nl"
-                            +"&cPlease connect via the proxy and, "
-                            +"if necessary, identify yourself via the 2FA function!");
+            config.setString("config", "license", "null");
 
-            config.setString("config", "isSet", "True");
             config.UpdateFile();
         }
         

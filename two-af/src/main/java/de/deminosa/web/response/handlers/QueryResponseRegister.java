@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.deminosa.bungeecord.BungeeApp;
+import de.deminosa.bungeecord.databasesystem.DataBaseSystem;
+import de.deminosa.utils.mysql.builder.ColumValue;
+import de.deminosa.utils.mysql.builder.Search;
+import de.deminosa.utils.mysql.builder.Update;
 import de.deminosa.web.response.QueryResponse;
 
 public class QueryResponseRegister implements QueryResponse{
@@ -26,11 +30,21 @@ public class QueryResponseRegister implements QueryResponse{
             return response;
         }
 
-        response = response.replace("%state%", "");
-        String key = BungeeApp.getInstance().getAuthManager().generateSecretKey();
-        String barcode = BungeeApp.getInstance().getAuthManager().getGoogleAuthenticatorBarCode(key, name, "Minecraft 2FA");
+        DataBaseSystem db = BungeeApp.getInstance().getMysql().getDataBaseSystem();
+        Search search = new Search("TOKEN", uuid.toString());
+        ColumValue tokenValue = new ColumValue("TOKEN", uuid.toString());
 
-        response = response.replace("%QR-Code%", BungeeApp.getInstance().getAuthManager().createQRCode(barcode, 64*4, 64*4));
+        if(db.getCreateTable().exsistValue(new Update(search, tokenValue))){
+            response = response.replace("%state%", "");
+            String key = BungeeApp.getInstance().getAuthManager().generateSecretKey();
+            String barcode = BungeeApp.getInstance().getAuthManager().getGoogleAuthenticatorBarCode(key, name, "Minecraft 2FA");
+
+            response = response.replace("%QR-Code%", BungeeApp.getInstance().getAuthManager().createQRCode(barcode, 64*4, 64*4));
+        }else {
+            response = response.replace("%state%", "Token is invalid!");
+        }
+
+        
         return response;
     }
     

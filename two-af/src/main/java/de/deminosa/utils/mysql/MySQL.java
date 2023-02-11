@@ -3,6 +3,7 @@ package de.deminosa.utils.mysql;
 import java.io.File;
 import java.io.IOException;
 
+import de.deminosa.bungeecord.databasesystem.DataBaseSystem;
 import de.deminosa.utils.JIniFile;
 
 
@@ -17,11 +18,17 @@ import de.deminosa.utils.JIniFile;
 public class MySQL{
 	
 	private AsyncMySQL mysql;
+	private final DataBaseSystem dataBaseSystem;
 
 	public MySQL(String dataFolder) {
 		conMySQL(dataFolder);
+		dataBaseSystem = new DataBaseSystem(dataFolder);
 	}
-		
+	
+	public DataBaseSystem getDataBaseSystem() {
+		return dataBaseSystem;
+	}
+
 	private void conMySQL(String datafolder) {
 		File dir = new File(datafolder);
 		File file = new File(datafolder+"/MySQL.ini");

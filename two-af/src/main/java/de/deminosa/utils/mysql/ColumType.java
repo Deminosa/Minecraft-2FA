@@ -23,8 +23,8 @@ public enum ColumType {
 	INT("INT"),
 	LONG("LONG"),
 	DOUBLE("DOUBLE"),
-	UUID("VARCHAR(48)");
-	
+	UUID("VARCHAR(48)"),
+	CUSTOM("");
 
 	private String args;
 	
@@ -36,4 +36,8 @@ public enum ColumType {
 		return args;
 	}
 	
+	public ColumType setArgument(String argument) {
+		args = argument;
+		return this;
+	}
 }

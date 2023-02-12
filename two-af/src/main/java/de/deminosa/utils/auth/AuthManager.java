@@ -1,4 +1,4 @@
-package de.deminosa.auth;
+package de.deminosa.utils.auth;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -7,7 +7,8 @@ import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
 
-import de.deminosa.auth.totp.TOTP;
+import de.deminosa.utils.auth.totp.TOTP;
+
 
 public class AuthManager {
 
@@ -28,7 +29,7 @@ public class AuthManager {
         return TOTP.getOTP(hexKey);
     }
 
-    public String getGoogleAuthenticatorBarCode(String secretKey, String account, String issuer) {
+    public String getBarCode(String secretKey, String account, String issuer) {
         try {
             return "otpauth://totp/"
                     + URLEncoder.encode(issuer + ":" + account, "UTF-8").replace("+", "%20")

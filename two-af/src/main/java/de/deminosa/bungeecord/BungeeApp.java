@@ -11,7 +11,7 @@ import de.deminosa.utils.License.ValidationType;
 import de.deminosa.utils.auth.AuthManager;
 import de.deminosa.utils.mojang.MojangAPI;
 import de.deminosa.utils.mysql.MySQL;
-import de.deminosa.web.Webinterface;
+import de.deminosa.web.webhandler.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeApp extends Plugin{

@@ -2,8 +2,6 @@ package de.deminosa.utils.mysql.builder;
 
 import java.util.HashMap;
 
-import javax.annotation.Nonnull;
-
 import de.deminosa.utils.mysql.ColumType;
 
 /*
@@ -22,7 +20,7 @@ public class Colum {
 		map = new HashMap<>();
 	}
 	
-	public void create(String columName, @Nonnull ColumType type) {
+	public void create(String columName, ColumType type) {
 		map.put(columName, type);
 	}
 	

@@ -34,7 +34,6 @@
 	</repositories>
 
   <dependencies>
-
     <!-- Spigot -->
     <dependency>
       <groupId>org.spigotmc</groupId>
@@ -56,7 +55,7 @@
       <version>3.2.1</version>
     </dependency>
 
-  <!-- Bungeecord -->
+    <!-- Bungeecord -->
     <dependency>
       <groupId>net.md-5</groupId>
       <artifactId>bungeecord-api</artifactId>

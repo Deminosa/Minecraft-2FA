@@ -1,4 +1,4 @@
-package de.deminosa.web;
+package de.deminosa.web.webhandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import de.deminosa.bungeecord.BungeeApp;
+import de.deminosa.web.WebServerManager;
 import de.deminosa.web.response.QueryResponse;
 import de.deminosa.web.response.handlers.QueryResponseLogin;
 import de.deminosa.web.response.handlers.QueryResponseRegister;

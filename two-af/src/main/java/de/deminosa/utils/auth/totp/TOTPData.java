@@ -1,4 +1,4 @@
-package de.deminosa.auth.totp;
+package de.deminosa.utils.auth.totp;
 
 import java.util.Random;
 

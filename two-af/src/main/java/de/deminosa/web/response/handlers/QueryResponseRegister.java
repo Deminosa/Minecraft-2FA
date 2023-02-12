@@ -78,7 +78,7 @@ public class QueryResponseRegister implements QueryResponse{
             }
             response = response.replace("%state%", "");
             String key = BungeeApp.getInstance().getAuthManager().generateSecretKey();
-            String barcode = BungeeApp.getInstance().getAuthManager().getGoogleAuthenticatorBarCode(key, name, "Minecraft 2FA");
+            String barcode = BungeeApp.getInstance().getAuthManager().getBarCode(key, name, "Minecraft 2FA");
 
             // remove create token
             db.getCreateTable().deletRow(search);

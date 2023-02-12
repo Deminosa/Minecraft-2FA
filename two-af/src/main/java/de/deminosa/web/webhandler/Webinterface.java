@@ -95,7 +95,7 @@ public class Webinterface implements HttpHandler{
 			return stringBuilder.toString();
 		}catch (Exception e) {
 			return "<h1>ERROR</h1><p>Please check the URL!<br>"
-					+ "<a href=\"/index.html\">Back to Main Page</a></p><hr />"
+					+ "<a href=\"/index\">Back to Main Page</a></p><hr />"
 					+ "<p>" + e.fillInStackTrace() + "</p>";
 		}
 	}

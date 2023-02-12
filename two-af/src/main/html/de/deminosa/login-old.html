@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/login-script.js"></script>
+    <title>Minecraft 2FA - Login</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="screen">
+            <div class="screen__content">
+                %state%
+                <form class="login" name="loginForm" method="post">
+                    <h2>Minecraft 2FA 🔑</h2>
+                    <div class="login__field">
+                        <i class="login__icon">👤</i>
+                        <input type="text" class="login__input" placeholder="Username" name="username" id="username">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon">🔒</i>
+                        <input type="text" class="login__input" placeholder="2FA Code" name="code" id="code">
+                    </div>
+                    <button class="button login__submit" onclick="login()">
+                        <span class="button__text">Authenticate</span>
+                        <i class="button__icon">📨</i>
+                    </button>
+                </form>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>		
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>		
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package de.deminosa.auth.totp;
+package de.deminosa.utils.auth.totp;
 
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;
@@ -92,7 +92,7 @@ public final class TOTP {
 	 */
 	private static byte[] hmac_sha1(final byte[] keyBytes, final byte[] text) {
 		try {
-			final Mac hmac = Mac.getInstance("HmacSHA512");
+			final Mac hmac = Mac.getInstance("HmacSHA1");
 			final SecretKeySpec macKey = new SecretKeySpec(keyBytes, "RAW");
 			hmac.init(macKey);
 			return hmac.doFinal(text);

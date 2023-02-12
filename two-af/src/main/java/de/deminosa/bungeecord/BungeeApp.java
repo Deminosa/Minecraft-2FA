@@ -3,11 +3,13 @@ package de.deminosa.bungeecord;
 import java.io.File;
 import java.io.IOException;
 
-import de.deminosa.auth.AuthManager;
+import de.deminosa.bungeecord.databasesystem.DataBaseSystem;
 import de.deminosa.utils.JIniFile;
 import de.deminosa.utils.License;
 import de.deminosa.utils.License.LogType;
 import de.deminosa.utils.License.ValidationType;
+import de.deminosa.utils.auth.AuthManager;
+import de.deminosa.utils.mojang.MojangAPI;
 import de.deminosa.utils.mysql.MySQL;
 import de.deminosa.web.Webinterface;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -19,6 +21,8 @@ public class BungeeApp extends Plugin{
     private AuthManager authManager;
     private JIniFile config;
     private MySQL mysql;
+    private MojangAPI mojangAPI;
+    private DataBaseSystem dataBaseSystem;
     
     @Override
     public void onEnable() {
@@ -36,16 +40,21 @@ public class BungeeApp extends Plugin{
             mysql = new MySQL(getDataFolder() + "");
 
             registerChannelID("onlyProxyJoin");
+            mojangAPI = new MojangAPI();
+            dataBaseSystem = new DataBaseSystem(getDataFolder() + "");
         }else {
             getProxy().stop();
         }
-
     }
 
     @Override
     public void onDisable() {
         webinterface.onDisable();
         super.onDisable();
+    }
+
+    public DataBaseSystem getDataBaseSystem() {
+        return dataBaseSystem;
     }
 
     public JIniFile getConfig() {
@@ -137,9 +146,14 @@ public class BungeeApp extends Plugin{
     private void setupConfig() {
         if(!config.SectionExist("config")){
             config.setString("config", "license", "null");
+            config.setString("config", "ip", "127.0.0.1");
 
             config.UpdateFile();
         }
         
+    }
+
+    public MojangAPI getMojangAPI() {
+        return mojangAPI;
     }
 }

@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.google.zxing.WriterException;
 
-import de.deminosa.auth.AuthManager;
+import de.deminosa.utils.auth.AuthManager;
 
 /**
  * Unit test for simple App.

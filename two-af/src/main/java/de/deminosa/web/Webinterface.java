@@ -14,6 +14,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import de.deminosa.bungeecord.BungeeApp;
 import de.deminosa.web.response.QueryResponse;
+import de.deminosa.web.response.handlers.QueryResponseLogin;
 import de.deminosa.web.response.handlers.QueryResponseRegister;
 
 public class Webinterface implements HttpHandler{
@@ -29,6 +30,7 @@ public class Webinterface implements HttpHandler{
 		webServerManager = new WebServerManager(port);
 
 		addQueryResponse(new QueryResponseRegister());
+		addQueryResponse(new QueryResponseLogin());
     }
 
     public void onEnable() {
@@ -80,7 +82,7 @@ public class Webinterface implements HttpHandler{
 
     private String getFileContents(String filenname) {
 		try {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(BungeeApp.getInstance().getDataFolder() + "//webpages//" + filenname));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(BungeeApp.getInstance().getDataFolder() + "/webpages/" + filenname));
 			StringBuilder stringBuilder = new StringBuilder();
 			String line = bufferedReader.readLine();
 			while (line != null) {
@@ -119,12 +121,14 @@ public class Webinterface implements HttpHandler{
 			for(QueryResponse qr : queryResponseList) {
 				response = qr.incomingResponse(map, response);
 			}
-        }
+        }else {
+			for(QueryResponse qr : queryResponseList) {
+				response = qr.incomingResponse(null, response);
+			}
+		}
 
-		response = response.replace("%QR-Code%", "");
-		response = response.replace("%state%", "Waiting...");
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
 
-        httpExchange.sendResponseHeaders(200, response.length());
 		OutputStream outputStream = httpExchange.getResponseBody();
 		outputStream.write(response.getBytes());
 		outputStream.close();

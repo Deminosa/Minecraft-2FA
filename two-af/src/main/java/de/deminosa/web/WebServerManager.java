@@ -2,7 +2,6 @@ package de.deminosa.web;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.UUID;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -13,15 +12,14 @@ public class WebServerManager {
 	
 	public WebServerManager(int port) {
 		BungeeApp.log("Loading Webinterface...");
-		BungeeApp.log(UUID.randomUUID().toString());
 		try {
-			server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
+			String ip = BungeeApp.getInstance().getConfig().ReadString("config", "ip", "127.0.0.1");
+			server = HttpServer.create(new InetSocketAddress(ip, port), 0);
 		} catch (IOException e) {
 			e.printStackTrace();
 			BungeeApp.log("[ERROR] Fail to start the HTTP Server!");
 			BungeeApp.log("[E-LOG] " + e.fillInStackTrace());
 		}
-		
 	}
 	
 	public void start() {

@@ -116,7 +116,8 @@ public class AsyncMySQL {
 		}
 
 		public Connection openConnection() throws Exception {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			//Class.forName("com.mysql.jdbc.Driver");
 			return this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://" + this.host + ":3306/" + this.database, this.user, this.password);
 		}
 

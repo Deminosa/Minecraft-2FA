@@ -1,8 +1,15 @@
 package de.deminosa.bungeecord.databasesystem;
 
+import java.util.UUID;
+
+import de.deminosa.bungeecord.BungeeApp;
+import de.deminosa.utils.mojang.sessionserver.MojangName;
 import de.deminosa.utils.mysql.ColumType;
 import de.deminosa.utils.mysql.builder.Colum;
+import de.deminosa.utils.mysql.builder.ColumValue;
+import de.deminosa.utils.mysql.builder.Search;
 import de.deminosa.utils.mysql.builder.Table;
+import de.deminosa.utils.mysql.builder.Update;
 
 public class DataBaseSystem {
 
@@ -20,6 +27,23 @@ public class DataBaseSystem {
         setUpCreateTable();
     }
 
+    public String createCreateToken(String player) {
+        String playerUuid = BungeeApp.getInstance().getMojangAPI().getSessionServer().getUUID(new MojangName(player));
+        if(playerUuid == null || playerUuid == "null"){
+            return null;
+        }
+
+        if(createTable.exsistValue(new Update(new Search("UUID", playerUuid), new ColumValue("UUID", playerUuid)))){
+            return null;
+        }
+
+        UUID uuid = UUID.randomUUID();
+        createTable.setFirstColum(new ColumValue("UUID", playerUuid));
+        createTable.updateColum(new Update(new Search("UUID", playerUuid), new ColumValue("TOKEN", uuid.toString())));
+
+        return uuid.toString();
+    }
+
     private void setUpCreateTable() {
         Colum colum = new Colum();
 
@@ -32,7 +56,7 @@ public class DataBaseSystem {
         Colum colum = new Colum();
 
         colum.create("UUID", ColumType.UUID);
-        colum.create("KEY", ColumType.VARCHAR_256);
+        colum.create("TOKEN_KEY", ColumType.VARCHAR_256);
         table.create(colum);
     }
 
